@@ -1,30 +1,48 @@
 package com.ares.steps.serenity;
 
-import com.ares.pages.NespressoPage;
+import com.ares.pages.OpenAccountPage;
+import com.ares.pages.ParaBankNavigation;
+import com.ares.pages.ParaBankPage;
+import com.ares.pages.TransferFundsPage;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.steps.ScenarioSteps;
 import static org.junit.Assert.assertTrue;
 
 public class EndUserSteps extends ScenarioSteps {
 
-    NespressoPage nespressoPage;
+    ParaBankPage loginPage;
+    ParaBankNavigation navigation;
+    OpenAccountPage openAccountPage;
+    TransferFundsPage transferFundsPage;
 
     @Step
-    public void is_on_homepage() {
-        nespressoPage.open();
-        nespressoPage.acceptCookiesIfPresent();
+    public void openPage(){
+        loginPage.open();
     }
 
     @Step
-    public void logs_in_with_credentials(String user, String pass) {
-        nespressoPage.openLoginDropdown();
-        nespressoPage.enterCredentials(user, pass);
-        nespressoPage.clickSubmit();
+    public void login(String username, String password) {
+        loginPage.enterCredentials(username, password);
+        loginPage.clickLogin();
     }
 
     @Step
-    public void should_be_logged_in() {
-        assertTrue("Assertion Failed: Logout button not found. User is not logged in.",
-                nespressoPage.isUserLoggedIn());
+    public void openAccount(){
+        navigation.selectMenuOption("Open New Account");
+        openAccountPage.openAccount();
+    }
+
+    public void transferFunds(){
+        navigation.selectMenuOption("Transfer Funds");
+        transferFundsPage.transferFunds();
+    }
+
+    @Step
+    public void logOut(){
+        navigation.logOut();
+    }
+
+    public Boolean loginSucceeded() {
+        return !loginPage.isLoginFailed();
     }
 }

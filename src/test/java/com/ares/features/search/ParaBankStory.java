@@ -13,11 +13,13 @@ import java.io.File;
 
 @RunWith(SerenityParameterizedRunner.class)
 @UseTestDataFrom("data/users.csv")
-public class NespressoLoginStory {
+public class ParaBankStory {
 
     // These fields are automatically populated by Serenity from the CSV headers
-    private String user;
-    private String pass;
+    private String password;
+    private String username;
+
+    private String amount;
 
     @BeforeClass
     public static void setupDriver() {
@@ -32,11 +34,32 @@ public class NespressoLoginStory {
     public EndUserSteps anna;
 
     @Test
-    public void login_to_nespresso_successfully() {
+    public void loginValid() {
         webdriver.manage().window().maximize();
+        anna.openPage();
+        anna.login(username,password);
+        assert anna.loginSucceeded();
+    }
 
-        anna.is_on_homepage();
-        anna.logs_in_with_credentials(user, pass);
-        anna.should_be_logged_in();
+    @Test
+    public void loginInvalid(){
+        webdriver.manage().window().maximize();
+        anna.openPage();
+        anna.login("invalid","invalid");
+        assert !anna.loginSucceeded();
+    }
+
+    @Test
+    public void fullScenarioTest(){
+        // login to app
+        webdriver.manage().window().maximize();
+        anna.openPage();
+        anna.login(username,password);
+        // open account
+        anna.openAccount();
+        // transfer
+        anna.transferFunds();
+        // logout
+        anna.logOut();
     }
 }

@@ -1,2 +1,2 @@
-user,pass
-"",""
+username,password,amount
+"test_user","test_passwd","10"
