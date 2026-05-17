@@ -1,9 +1,6 @@
 package com.ares.steps.serenity;
 
-import com.ares.pages.OpenAccountPage;
-import com.ares.pages.ParaBankNavigation;
-import com.ares.pages.ParaBankPage;
-import com.ares.pages.TransferFundsPage;
+import com.ares.pages.*;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.steps.ScenarioSteps;
 import static org.junit.Assert.assertTrue;
@@ -14,6 +11,7 @@ public class EndUserSteps extends ScenarioSteps {
     ParaBankNavigation navigation;
     OpenAccountPage openAccountPage;
     TransferFundsPage transferFundsPage;
+    UpdateContactInfoPage updateContactInfoPage;
 
     @Step
     public void openPage(){
@@ -44,5 +42,11 @@ public class EndUserSteps extends ScenarioSteps {
 
     public Boolean loginSucceeded() {
         return !loginPage.isLoginFailed();
+    }
+
+    @Step
+    public void openUpdateContactInfo() {
+        navigation.selectMenuOption("Update Contact Info");
+        updateContactInfoPage.updateInfo();
     }
 }

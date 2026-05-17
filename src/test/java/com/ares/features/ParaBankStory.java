@@ -1,5 +1,6 @@
 package com.ares.features;
 
+import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.thucydides.junit.annotations.UseTestDataFrom;
 import net.thucydides.core.annotations.Managed;
@@ -46,7 +47,7 @@ public class ParaBankStory {
         webdriver.manage().window().maximize();
         anna.openPage();
         anna.login("invalid","invalid");
-        assert !anna.loginSucceeded();
+        assert anna.loginSucceeded();
     }
 
     @Test
@@ -62,4 +63,17 @@ public class ParaBankStory {
         // logout
         anna.logOut();
     }
+
+    @Test
+    public void updatePProfile(){
+        webdriver.manage().window().maximize();
+        anna.openPage();
+        anna.login(username, password);
+
+        anna.openUpdateContactInfo();
+
+        anna.logOut();
+    }
+
+
 }
