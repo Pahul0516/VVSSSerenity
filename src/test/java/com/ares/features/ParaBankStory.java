@@ -1,6 +1,5 @@
 package com.ares.features;
 
-import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.thucydides.junit.annotations.UseTestDataFrom;
 import net.thucydides.core.annotations.Managed;
@@ -26,6 +25,9 @@ public class ParaBankStory {
     public static void setupDriver() {
         File file = new File("drivers/msedgedriver.exe");
         System.setProperty("webdriver.edge.driver", file.getAbsolutePath());
+        System.setProperty("webdriver.driver", "edge");
+        System.setProperty("edge.switches",
+                "--headless=new,--no-sandbox,--disable-dev-shm-usage,--disable-gpu,--window-size=1920,1080,--remote-debugging-port=0,--disable-extensions,--no-first-run");
     }
 
     @Managed(uniqueSession = true)
@@ -36,7 +38,7 @@ public class ParaBankStory {
 
     @Test
     public void loginValid() {
-        webdriver.manage().window().maximize();
+//        webdriver.manage().window().maximize();
         anna.openPage();
         anna.login(username,password);
         assert anna.loginSucceeded();
@@ -44,16 +46,16 @@ public class ParaBankStory {
 
     @Test
     public void loginInvalid(){
-        webdriver.manage().window().maximize();
+//        webdriver.manage().window().maximize();
         anna.openPage();
         anna.login("invalid","invalid");
-        assert anna.loginSucceeded();
+        assert !anna.loginSucceeded();
     }
 
     @Test
     public void fullScenarioTest(){
         // login to app
-        webdriver.manage().window().maximize();
+//        webdriver.manage().window().maximize();
         anna.openPage();
         anna.login(username,password);
         // open account
@@ -66,7 +68,7 @@ public class ParaBankStory {
 
     @Test
     public void updatePProfile(){
-        webdriver.manage().window().maximize();
+//        webdriver.manage().window().maximize();
         anna.openPage();
         anna.login(username, password);
 
